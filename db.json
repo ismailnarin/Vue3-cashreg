@@ -1,0 +1,290 @@
+{
+  "product": [
+    {
+      "title": "Telefon",
+      "created_at": "2023-07-17T13:25:56.601Z",
+      "price": 1000,
+      "image": "https://placehold.co/300x300",
+      "stock": 100,
+      "criticalStock": 1,
+      "id": 1
+    },
+    {
+      "title": "Duş jeli",
+      "created_at": "2023-07-27T18:14:49.852Z",
+      "price": 1000,
+      "image": "https://placehold.co/300x300",
+      "stock": 100,
+      "criticalStock": 10,
+      "id": 2
+    }
+  ],
+  "beauty-services": [
+    {
+      "title": "Kaş Kirpik",
+      "created_at": "2023-07-25T15:08:04.641Z",
+      "image": "https://placehold.co/300x300",
+      "priceCash": 500,
+      "priceCard": 1000,
+      "seans": [
+        {
+          "seansID": 1690297308112,
+          "seansNumber": 3,
+          "packagePriceCash": 2500,
+          "packagePriceCard": 3000
+        }
+      ],
+      "seansCheck": true,
+      "id": 2
+    },
+    {
+      "title": "Microblading",
+      "created_at": "2023-08-08T10:38:02.312Z",
+      "image": "https://placehold.co/300x300",
+      "priceCash": 2000,
+      "priceCard": 30000,
+      "seans": [
+        {
+          "seansID": 1690373317919,
+          "seansNumber": 2,
+          "packagePriceCash": 2,
+          "packagePriceCard": 2
+        },
+        {
+          "seansID": 1691491080605,
+          "seansNumber": 5,
+          "packagePriceCash": 5000,
+          "packagePriceCard": 6000
+        }
+      ],
+      "seansCheck": true,
+      "id": 3
+    }
+  ],
+  "right-menu": [
+    {
+      "id": 1,
+      "icon": "fa fa-user-plus",
+      "text": "Müşteri Ekle",
+      "containerName": "AddCustomer"
+    },
+    {
+      "id": 2,
+      "icon": "fa fa-user",
+      "text": "Müşteri Seç",
+      "containerName": "SelectCustomer"
+    },
+    {
+      "id": 3,
+      "icon": "fa fa-users",
+      "text": "Personeller",
+      "containerName": "PersonelContainer"
+    },
+    {
+      "id": 4,
+      "icon": "fa fa-users",
+      "text": "Belge Listesi(Günlük Rapor müşteri telefonu borcu)",
+      "containerName": "DailyRapor"
+    },
+    {
+      "id": 5,
+      "icon": "fa fa-users",
+      "text": "Satış Raporu",
+      "containerName": "PurchaseRapor"
+    }
+  ],
+  "customer": [
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 1
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 2
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 3
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 4
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 5
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 6
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 7
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 8
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 9
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 10
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 11
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 12
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 13
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 14
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 15
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 16
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 17
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 18
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 19
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 20
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 21
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 22
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 23
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 24
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 25
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 26
+    },
+    {
+      "cusName": "İsmail",
+      "cusSurname": "Narin",
+      "cusPhone": 5536557796,
+      "id": 27
+    },
+    {
+      "cusName": "Mert",
+      "cusSurname": "Tahtalı",
+      "cusPhone": 5536557796,
+      "id": 28
+    },
+    {
+      "cusName": "babür",
+      "cusSurname": "filan",
+      "cusPhone": 11111111111,
+      "id": 29
+    },
+    {
+      "cusName": "Ceren Başak",
+      "cusSurname": "Malkoç",
+      "cusPhone": 123456789123,
+      "id": 30
+    }
+  ],
+  "personel": [
+    {
+      "id": 1,
+      "name": "Sunay",
+      "surName": "Narin"
+    },
+    {
+      "name": "Gülay",
+      "surName": "Narin",
+      "id": 2
+    }
+  ]
+}
