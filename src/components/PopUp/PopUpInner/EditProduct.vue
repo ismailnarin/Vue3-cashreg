@@ -382,13 +382,10 @@ export default {
       }
     },
     uploadProduct() {
-      const packages=JSON.parse(this.productValue.packages);
-      var value=this.productValue;
-      value.packages=packages;
-      console.log(value)
-      
+      console.log(this.productValue); 
+      const packages=
       axios
-        .post("http://backend.laragon/edit_product.php", value)
+        .post("http://backend.laragon/edit_product.php", this.productValue)
         .then(() => {
           this.saveButtonText = "Kaydedildi";
           setTimeout(() => {
