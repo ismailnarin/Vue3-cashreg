@@ -4,7 +4,7 @@
       <img src="@/assets/image/runnincAcc/closeIco.svg" alt="" />
     </div>
     <h2>Ürün / Hizmet Ekle</h2>
-    <div class="d-f">
+    <div class="d-f" v-if="productValue.productPhoto==''">
       <span>Resim Seç</span>
       <span>
         <input
@@ -15,6 +15,13 @@
         />
       </span>
     </div>
+    <div v-else>
+      <img src="@/assets/image/runnincAcc/deleteOrder.svg" alt="" @click="deletePhoto">
+      <div  class="imgContainer">
+      <img :src="'http://backend.laragon/'+productValue.productPhoto" alt="" >
+    </div>  
+    </div>
+
     <div class="d-f">
       <span>Kategori Seç</span>
       <span>
@@ -96,17 +103,17 @@
       </div>
     </div>
     <div
-      v-if="productValue.packages.length > 0"
-      class="d-f w-full space-around"
+      v-if="productValue.packages"
+      class="d-f w-full space-around flex-column"
     >
       <div
-        v-for="value in productValue.packages"
+        v-for="value in JSON.parse(productValue.packages)"
         :key="value.id"
-        class="d-f w-full"
+        class="d-f w-full space-around seansInner"
       >
-        <div>Seans Sayısı : {{ value.seansNumber }}</div>
-        <div>Kart Fiyatı : {{ value.packagePriceCash }}</div>
-        <div>Nakit Fiyatı : {{ value.packagePriceCard }}</div>
+        <div>Seans Sayısı : <b>{{ value.seansNumber }}</b></div>
+        <div>Kart Fiyatı : <b>{{ value.packagePriceCash }}</b></div>
+        <div>Nakit Fiyatı : <b>{{ value.packagePriceCard }}</b></div>
         <div style="padding-left: 5px" @click="deleteSeans(value)">
           <img src="@/assets/image/runnincAcc/deleteOrder.svg" alt="" />
         </div>
@@ -121,12 +128,35 @@
   </div>
 </template>
 <style scoped>
+.imgContainer{
+  display: flex;
+  width:150px;
+  height: 150px;
+}
+.imgContainer img{
+  object-fit: contain;
+  width: 100%;
+}
+b{
+  color:#ff9291;
+}
+.seansInner >div{
+  width:150px;
+  padding:10px 0px;
+}
+.seansInner >div:last-child{
+  width:25px;
+}
 .addSeans {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   margin-left: 34px;
   cursor: pointer;
+}
+.seansed{
+  display: flex;
+    flex-direction: column;
 }
 .saveButton {
   display: flex;
@@ -255,11 +285,14 @@ export default {
     };
   },
   methods: {
+    deletePhoto(){
+      this.productValue.productPhoto="";
+    },
+
     deleteSeans(value) {
-      console.log(value);
-      this.productValue.packages = this.productValue.packages.filter(
-        (item) => item.seansID !== value.seansID
-      );
+      var packages=JSON.parse(this.productValue.packages);
+      packages=packages.filter((item)=>item.seansID!==value.seansID);
+      this.productValue.packages = JSON.stringify(packages);
     },
     isChecked() {
       return this.productValue.openPackageStatus == 1 ? true : false;
@@ -284,8 +317,9 @@ export default {
           packagePriceCash: this.packagePriceCash,
           packagePriceCard: this.packagePriceCard,
         };
-
-        this.productValue.packages.push(addPackage);
+        var packages=JSON.parse(this.productValue.packages) || [];
+        packages.push(addPackage)
+        this.productValue.packages=JSON.stringify(packages);
         this.seansNumber = 0;
         this.packagePriceCash = 0;
         this.packagePriceCard = 0;
@@ -309,7 +343,7 @@ export default {
     },
     saveProduct() {
       if (
-        this.selectedFile !== "" &&
+        this.selectedFile !== "" || this.productValue.productPhoto!=="" &&
         this.productValue.productCategory !== "" &&
         this.productValue.productName !== "" &&
         this.productValue.productPriceCash !== "" &&
@@ -318,20 +352,27 @@ export default {
           this.productValue.productBonusPrice > 0) ||
           this.productValue.productBonus == "1")
       ) {
-        this.uploadImage().then(() => {
+        if(this.productValue.productPhoto!==""){
           this.uploadProduct();
-        });
+        }else{
+
+          this.uploadImage().then(() => {
+            this.uploadProduct();
+          });
+        }
       } else {
         alert("Lütfen Eksik Bilgi Olmadığından Emin Olunuz");
       }
     },
     uploadProduct() {
+      console.log(this.productValue)
       axios
-        .post("http://backend.laragon/add_product.php", this.addProduct)
+        .post("http://backend.laragon/edit_product.php", this.productValue)
         .then(() => {
           this.saveButtonText = "Kaydedildi";
           setTimeout(() => {
             this.closePopUp();
+            this.$store.dispatch("Product/productFilter",this.selectFilter)
           }, 1000); //
         });
     },
@@ -344,11 +385,9 @@ export default {
     ...mapGetters({
       categories: "NavMenu/_navMenuItems",
       productValue: "Product/_editProductValue",
+      selectFilter:"Product/_selectFilter",
     }),
   },
-  created() {
-    console.log(this.productValue);
-    this.productValue.packages = JSON.parse(this.productValue.packages);
-  },
+
 };
 </script>

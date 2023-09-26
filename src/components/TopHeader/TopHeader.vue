@@ -125,16 +125,23 @@ export default {
       this.$store.dispatch("PopUp/changePopUpComponent", "CallCustomer");
     },
     async addWaiting() {
-      const packages = {
-        selectedCustomer: this.selectedCustomer,
-        orderList: this.orderList,
-      };
-      await this.$store.dispatch("WaitingList/addWaiting", packages);
-      this.$store.dispatch("RunningAcc/refreshRunning");
-      this.$store.dispatch("SelectedCustomer/refreshSelectedCustomer");
-      this.$store.dispatch("Order/resetOrderStore");
-      this.$store.dispatch("OrderList/resetOrderList");
-      this.$store.dispatch("Customer/refreshCustomerStore");
+      if(this.selectedCustomer!==""){
+
+        const packages = {
+          selectedCustomer: this.selectedCustomer,
+          orderList: this.orderList,
+        };
+        await this.$store.dispatch("WaitingList/addWaiting", packages);
+        this.$store.dispatch("RunningAcc/refreshRunning");
+        this.$store.dispatch("SelectedCustomer/refreshSelectedCustomer");
+        this.$store.dispatch("Order/resetOrderStore");
+        this.$store.dispatch("OrderList/resetOrderList");
+        this.$store.dispatch("Customer/refreshCustomerStore");
+      }
+      else{
+        alert("Lütfen Müşteri Seçiniz.");
+      }
+
     },
     addProduct() {
       this.$store.dispatch("PopUp/openPopUp");

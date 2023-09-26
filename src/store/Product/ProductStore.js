@@ -5,6 +5,7 @@ export default {
     productList: "",
     editProduct: false,
     editProductValue: "",
+    selectFilter:1
   },
   mutations: {
     setProductList(state, data) {
@@ -16,6 +17,9 @@ export default {
     editProductValue(state, value) {
       state.editProductValue = value;
     },
+    changeSelectFilter(state,value){
+      state.selectFilter=value;
+    }
   },
   getters: {
     _productList(state) {
@@ -27,8 +31,14 @@ export default {
     _editProductValue(state) {
       return state.editProductValue;
     },
+    _selectFilter(state){
+      return state.selectFilter;
+    }
   },
   actions: {
+    async changeSelectFilter({commit},value){
+      commit("changeSelectFilter",value)
+    },
     async productFilter({ commit }, filter) {
       axios
         .post("http://backend.laragon/get_product.php", filter)

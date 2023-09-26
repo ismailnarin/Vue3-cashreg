@@ -37,7 +37,7 @@
             </td>
           </tr>
           <tr
-            v-for="seans in productValue.packages"
+            v-for="seans in JSON.parse(productValue.packages)"
             :key="seans.seansID"
             @click="addSeansOrder(seans, productValue)"
           >
@@ -60,7 +60,7 @@
 .editProduct {
   display: flex;
   position: absolute;
-  z-index: 8;
+  z-index: 5;
   right: 5px;
   top: 5px;
 }
@@ -111,16 +111,17 @@ th:last-child {
   justify-content: center;
 }
 .packages {
-  display: flex;
-  position: absolute;
-  width: 300%;
-  height: 150%;
-  background-color: white;
-  left: 105%;
-  box-shadow: 0 0px 6px 0px rgb(0 0 0 / 39%);
-  align-content: center;
-  border-radius: 15px;
-  padding: 10px;
+  overflow-y: scroll;
+    display: flex;
+    position: absolute;
+    width: 300%;
+    height: 150%;
+    background-color: white;
+    left: 105%;
+    box-shadow: 0 0px 6px 0px rgb(0 0 0 / 39%);
+    align-content: center;
+    border-radius: 15px;
+    padding: 10px;
 }
 .productText,
 .priceText {
@@ -171,11 +172,12 @@ export default {
   },
   props: ["productValue"],
   methods: {
-    editProduct(value) {
+    async editProduct(value) {
       console.log(value);
-      this.$store.dispatch("PopUp/openPopUp");
-      this.$store.dispatch("PopUp/changePopUpComponent", "EditProduct");
-      this.$store.dispatch("Product/editProductValue", value);
+     await this.$store.dispatch("Product/productFilter", this.selectFilter);
+     await this.$store.dispatch("PopUp/openPopUp");
+     await this.$store.dispatch("PopUp/changePopUpComponent", "EditProduct");
+     await this.$store.dispatch("Product/editProductValue", value);
     },
     addTekSeans(product) {
       const order = {
@@ -220,6 +222,7 @@ export default {
   computed: {
     ...mapGetters({
       isEditProduct: "Product/_editProduct",
+      selectFilter:"Product/_selectFilter",
     }),
   },
 };

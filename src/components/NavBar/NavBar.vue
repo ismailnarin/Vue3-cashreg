@@ -54,6 +54,7 @@ export default {
   methods: {
     setProductFilter(filterID) {
       this.$store.dispatch("Product/productFilter", filterID);
+      this.$store.dispatch("Product/changeSelectFilter", filterID);
       this.selected = filterID;
     },
   },

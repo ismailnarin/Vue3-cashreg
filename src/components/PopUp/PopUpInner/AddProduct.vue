@@ -94,7 +94,7 @@
         </span>
       </div>
     </div>
-    <div v-if="addProduct.packages.length > 0" class="d-f w-full space-around">
+    <div v-if="addProduct.packages.length > 0" class="d-f w-full space-around seansed">
       <div
         v-for="value in addProduct.packages"
         :key="value.id"
@@ -184,6 +184,11 @@ h2 {
 .d-f {
   font-size: 15px;
   color: #567488;
+
+}
+.seansed{
+  display: flex;
+    flex-direction: column;
 }
 
 .d-f input {
