@@ -78,6 +78,9 @@
           :checked="isChecked"
           @change="toggleCheckbox"
       /></span>
+      <div>
+        <div class="openPackage" :style="productValue.openPackageStatus=='0'?'':'background:pink;'  " @click="toggleCheckbox"></div>
+      </div>
     </div>
     <div class="seans space-around" v-if="isChecked()">
       <div>
@@ -128,6 +131,18 @@
   </div>
 </template>
 <style scoped>
+
+.openPackage{
+  display: flex;
+  max-width: 15px;
+  max-height: 15px;
+  width:15px;
+  height: 15px;
+  background-color: transparent;
+  border:2px solid #ff9291;
+  border-radius: 15px;
+}
+
 .imgContainer{
   display: flex;
   width:150px;
@@ -295,9 +310,11 @@ export default {
       this.productValue.packages = JSON.stringify(packages);
     },
     isChecked() {
+      console.log(this.productValue.openPackageStatus);
       return this.productValue.openPackageStatus == 1 ? true : false;
     },
     toggleCheckbox() {
+      console.log(this.productValue )
       this.productValue.openPackageStatus == "1"
         ? (this.productValue.openPackageStatus = "0")
         : (this.productValue.openPackageStatus = "1");
@@ -365,9 +382,13 @@ export default {
       }
     },
     uploadProduct() {
-      console.log(this.productValue)
+      const packages=JSON.parse(this.productValue.packages);
+      var value=this.productValue;
+      value.packages=packages;
+      console.log(value)
+      
       axios
-        .post("http://backend.laragon/edit_product.php", this.productValue)
+        .post("http://backend.laragon/edit_product.php", value)
         .then(() => {
           this.saveButtonText = "Kaydedildi";
           setTimeout(() => {
@@ -388,6 +409,7 @@ export default {
       selectFilter:"Product/_selectFilter",
     }),
   },
+
 
 };
 </script>
