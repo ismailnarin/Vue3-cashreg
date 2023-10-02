@@ -1,4 +1,7 @@
 <template>
+  <transition name="slide">
+    <AlertComponent v-if="alertStatus" />
+  </transition>
   <transition>
     <PopUp v-if="popUpStatus" />
   </transition>
@@ -16,6 +19,15 @@
 </template>
 
 <style scoped>
+.slide-leave-to,
+.slide-enter-active {
+  top: -15%;
+  transition: all ease 0.7s;
+}
+.slide-leave-from,
+.slide-enter-to {
+  top: 0px;
+}
 .zindex {
   z-index: 10;
 }
@@ -33,6 +45,7 @@
 <script>
 import { mapGetters } from "vuex";
 import LeftMenu from "@/components/LeftMenu/LeftMenu";
+import AlertComponent from "@/components/AlertComponent/AlertComp";
 import TopHeader from "@/components/TopHeader/TopHeader";
 import PopUp from "@/components/PopUp/PopUp";
 export default {
@@ -40,11 +53,13 @@ export default {
     LeftMenu,
     TopHeader,
     PopUp,
+    AlertComponent,
   },
   computed: {
     ...mapGetters({
       popUpStatus: "PopUp/_popUpStatus",
       isAuth: "Auth/_isAuth",
+      alertStatus: "Alert/_alertStatus",
     }),
   },
 };

@@ -94,7 +94,10 @@
         </span>
       </div>
     </div>
-    <div v-if="addProduct.packages.length > 0" class="d-f w-full space-around seansed">
+    <div
+      v-if="addProduct.packages.length > 0"
+      class="d-f w-full space-around seansed"
+    >
       <div
         v-for="value in addProduct.packages"
         :key="value.id"
@@ -184,11 +187,10 @@ h2 {
 .d-f {
   font-size: 15px;
   color: #567488;
-
 }
-.seansed{
+.seansed {
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .d-f input {
@@ -305,7 +307,12 @@ export default {
           this.uploadProduct();
         });
       } else {
-        alert("Lütfen Eksik Bilgi Olmadığından Emin Olunuz");
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "warning",
+          alertText: "Lütfen Eksik Bilgi Olmadığından Emin Olunuz",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
       }
     },
     uploadProduct() {
@@ -313,6 +320,12 @@ export default {
         .post("http://backend.laragon/add_product.php", this.addProduct)
         .then(() => {
           this.saveButtonText = "Kaydedildi";
+          this.$store.dispatch("Alert/openAlert");
+          const alertPackage = {
+            alertType: "success",
+            alertText: "Kaydedildi",
+          };
+          this.$store.dispatch("Alert/alertContent", alertPackage);
           setTimeout(() => {
             this.closePopUp();
           }, 1000); //

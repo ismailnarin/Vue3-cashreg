@@ -125,8 +125,7 @@ export default {
       this.$store.dispatch("PopUp/changePopUpComponent", "CallCustomer");
     },
     async addWaiting() {
-      if(this.selectedCustomer!==""){
-
+      if (this.selectedCustomer !== "") {
         const packages = {
           selectedCustomer: this.selectedCustomer,
           orderList: this.orderList,
@@ -137,11 +136,14 @@ export default {
         this.$store.dispatch("Order/resetOrderStore");
         this.$store.dispatch("OrderList/resetOrderList");
         this.$store.dispatch("Customer/refreshCustomerStore");
+      } else {
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "warning",
+          alertText: "Lütfen Müşteri Seçiniz.",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
       }
-      else{
-        alert("Lütfen Müşteri Seçiniz.");
-      }
-
     },
     addProduct() {
       this.$store.dispatch("PopUp/openPopUp");

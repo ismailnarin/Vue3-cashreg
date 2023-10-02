@@ -32,17 +32,50 @@
           <th>Sipariş Tutarı</th>
           <th>Tarih</th>
         </tr>
-        <tr v-for="order in orderReportList" :key="order.id">
-          <td>{{ order.id }}</td>
-          <td>{{ order.cus_name }} {{ order.cus_surname }}</td>
-          <td>{{ order.cus_phone }}</td>
-          <td>{{ order.order_cash_price }}</td>
-          <td>{{ order.order_card_price }}</td>
-          <td>{{ order.order_discount }}</td>
-          <td>{{ order.order_running_price }}</td>
-          <td>{{ order.order_price }}</td>
-          <td>{{ order.created_at }}</td>
-        </tr>
+        <template v-for="order in orderReportList" :key="order.id">
+          <tr @click="openDetail(order.id)">
+            <td>{{ order.id }}</td>
+            <td>{{ order.cus_name }} {{ order.cus_surname }}</td>
+            <td>{{ order.cus_phone }}</td>
+            <td>{{ order.order_cash_price }}</td>
+            <td>{{ order.order_card_price }}</td>
+            <td>{{ order.order_discount }}</td>
+            <td>{{ order.order_running_price }}</td>
+            <td>{{ order.order_price }}</td>
+            <td>{{ order.created_at }}</td>
+          </tr>
+          <transition name="acordion">
+            <tr v-if="openAcordion == order.id">
+              <td colspan="9">
+                <div class="orderDetail">
+                  <div>
+                    <span>Müşteri:</span>
+                    <span>
+                      <select name="" id="" v-model="order.cus_id">
+                        <option
+                          :value="customer.cus_id"
+                          v-for="customer in customerList"
+                          :key="customer.cus_id"
+                        >
+                          {{ customer.cus_name }} {{ customer.cus_surname }}
+                        </option>
+                      </select>
+                    </span>
+                  </div>
+                  <div>
+                    <span>Tarih:</span>
+                    <input
+                      type="datetime-local"
+                      name=""
+                      v-model="order.created_at"
+                      id=""
+                    />
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </transition>
+        </template>
         <tr v-if="orderReportList.length > 0">
           <td colspan="3">Toplam</td>
           <td>{{ cashTotal }}</td>
@@ -56,6 +89,21 @@
   </div>
 </template>
 <style scoped>
+.orderDetail {
+  display: flex;
+}
+
+.acordion-enter-from,
+.acordion-leave-to {
+  height: 0px;
+  transition: all ease 0.3s;
+}
+.acordion-enter-to,
+.acordion-leave-from {
+  transform: scaleY(1);
+  transform-origin: top center;
+  transition: all ease 0.3s;
+}
 .dataContainer {
   align-items: center;
 }
@@ -141,9 +189,17 @@ export default {
         firstDate: "",
         secondDate: "",
       },
+      openAcordion: null,
     };
   },
   methods: {
+    openDetail(id) {
+      if (this.openAcordion == null || this.openAcordion !== id) {
+        this.openAcordion = id;
+      } else {
+        this.openAcordion = null;
+      }
+    },
     getOrderReport() {
       this.$store.dispatch("OrderReport/getOrderReport", this.dates);
     },
@@ -151,6 +207,7 @@ export default {
   computed: {
     ...mapGetters({
       orderReportList: "OrderReport/_orderReportList",
+      customerList: "Customer/_customerList",
     }),
     cashTotal() {
       return this.orderReportList.reduce(

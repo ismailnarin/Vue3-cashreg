@@ -34,7 +34,12 @@ export default {
             commit("setAuthentication", response);
             commit("setIsAuth");
           } else {
-            alert("Kullanıcı Bulunamadı");
+            this.$store.dispatch("Alert/openAlert");
+            const alertPackage = {
+              alertType: "warning",
+              alertText: "Kullanıcı Bulunamadı",
+            };
+            this.$store.dispatch("Alert/alertContent", alertPackage);
           }
         });
     },

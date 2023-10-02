@@ -4,7 +4,7 @@
       <img src="@/assets/image/runnincAcc/closeIco.svg" alt="" />
     </div>
     <h2>Ürün / Hizmet Ekle</h2>
-    <div class="d-f" v-if="productValue.productPhoto==''">
+    <div class="d-f" v-if="productValue.productPhoto == ''">
       <span>Resim Seç</span>
       <span>
         <input
@@ -16,10 +16,17 @@
       </span>
     </div>
     <div v-else>
-      <img src="@/assets/image/runnincAcc/deleteOrder.svg" alt="" @click="deletePhoto">
-      <div  class="imgContainer">
-      <img :src="'http://backend.laragon/'+productValue.productPhoto" alt="" >
-    </div>  
+      <img
+        src="@/assets/image/runnincAcc/deleteOrder.svg"
+        alt=""
+        @click="deletePhoto"
+      />
+      <div class="imgContainer">
+        <img
+          :src="'http://backend.laragon/' + productValue.productPhoto"
+          alt=""
+        />
+      </div>
     </div>
 
     <div class="d-f">
@@ -70,16 +77,15 @@
     </div>
     <div class="d-f" v-if="productValue.productCategory !== 1">
       <span>Paket Ücretlerini Aç</span>
-      <span
-        ><input
-          type="checkbox"
-          name=""
-          id=""
-          :checked="isChecked"
-          @change="toggleCheckbox"
-      /></span>
+
       <div>
-        <div class="openPackage" :style="productValue.openPackageStatus=='0'?'':'background:pink;'  " @click="toggleCheckbox"></div>
+        <div
+          class="openPackage pt"
+          :style="
+            productValue.openPackageStatus == '0' ? '' : 'background:pink;'
+          "
+          @click="toggleCheckbox"
+        ></div>
       </div>
     </div>
     <div class="seans space-around" v-if="isChecked()">
@@ -106,7 +112,7 @@
       </div>
     </div>
     <div
-      v-if="productValue.packages"
+      v-if="productValue?.packages"
       class="d-f w-full space-around flex-column"
     >
       <div
@@ -114,9 +120,15 @@
         :key="value.id"
         class="d-f w-full space-around seansInner"
       >
-        <div>Seans Sayısı : <b>{{ value.seansNumber }}</b></div>
-        <div>Kart Fiyatı : <b>{{ value.packagePriceCash }}</b></div>
-        <div>Nakit Fiyatı : <b>{{ value.packagePriceCard }}</b></div>
+        <div>
+          Seans Sayısı : <b>{{ value.seansNumber }}</b>
+        </div>
+        <div>
+          Kart Fiyatı : <b>{{ value.packagePriceCash }}</b>
+        </div>
+        <div>
+          Nakit Fiyatı : <b>{{ value.packagePriceCard }}</b>
+        </div>
         <div style="padding-left: 5px" @click="deleteSeans(value)">
           <img src="@/assets/image/runnincAcc/deleteOrder.svg" alt="" />
         </div>
@@ -131,36 +143,35 @@
   </div>
 </template>
 <style scoped>
-
-.openPackage{
+.openPackage {
   display: flex;
   max-width: 15px;
   max-height: 15px;
-  width:15px;
+  width: 15px;
   height: 15px;
   background-color: transparent;
-  border:2px solid #ff9291;
+  border: 2px solid #ff9291;
   border-radius: 15px;
 }
 
-.imgContainer{
+.imgContainer {
   display: flex;
-  width:150px;
+  width: 150px;
   height: 150px;
 }
-.imgContainer img{
+.imgContainer img {
   object-fit: contain;
   width: 100%;
 }
-b{
-  color:#ff9291;
+b {
+  color: #ff9291;
 }
-.seansInner >div{
-  width:150px;
-  padding:10px 0px;
+.seansInner > div {
+  width: 150px;
+  padding: 10px 0px;
 }
-.seansInner >div:last-child{
-  width:25px;
+.seansInner > div:last-child {
+  width: 25px;
 }
 .addSeans {
   display: inline-flex;
@@ -169,9 +180,9 @@ b{
   margin-left: 34px;
   cursor: pointer;
 }
-.seansed{
+.seansed {
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 }
 .saveButton {
   display: flex;
@@ -300,13 +311,13 @@ export default {
     };
   },
   methods: {
-    deletePhoto(){
-      this.productValue.productPhoto="";
+    deletePhoto() {
+      this.productValue.productPhoto = "";
     },
 
     deleteSeans(value) {
-      var packages=JSON.parse(this.productValue.packages);
-      packages=packages.filter((item)=>item.seansID!==value.seansID);
+      var packages = JSON.parse(this.productValue.packages);
+      packages = packages.filter((item) => item.seansID !== value.seansID);
       this.productValue.packages = JSON.stringify(packages);
     },
     isChecked() {
@@ -314,7 +325,7 @@ export default {
       return this.productValue.openPackageStatus == 1 ? true : false;
     },
     toggleCheckbox() {
-      console.log(this.productValue )
+      console.log(this.productValue);
       this.productValue.openPackageStatus == "1"
         ? (this.productValue.openPackageStatus = "0")
         : (this.productValue.openPackageStatus = "1");
@@ -334,9 +345,9 @@ export default {
           packagePriceCash: this.packagePriceCash,
           packagePriceCard: this.packagePriceCard,
         };
-        var packages=JSON.parse(this.productValue.packages) || [];
-        packages.push(addPackage)
-        this.productValue.packages=JSON.stringify(packages);
+        var packages = JSON.parse(this.productValue.packages) || [];
+        packages.push(addPackage);
+        this.productValue.packages = JSON.stringify(packages);
         this.seansNumber = 0;
         this.packagePriceCash = 0;
         this.packagePriceCard = 0;
@@ -360,39 +371,49 @@ export default {
     },
     saveProduct() {
       if (
-        this.selectedFile !== "" || this.productValue.productPhoto!=="" &&
-        this.productValue.productCategory !== "" &&
-        this.productValue.productName !== "" &&
-        this.productValue.productPriceCash !== "" &&
-        this.productValue.productPriceCard !== "" &&
-        ((this.productValue.productBonus !== "1" &&
-          this.productValue.productBonusPrice > 0) ||
-          this.productValue.productBonus == "1")
+        this.selectedFile !== "" ||
+        (this.productValue.productPhoto !== "" &&
+          this.productValue.productCategory !== "" &&
+          this.productValue.productName !== "" &&
+          this.productValue.productPriceCash !== "" &&
+          this.productValue.productPriceCard !== "" &&
+          ((this.productValue.productBonus !== "1" &&
+            this.productValue.productBonusPrice > 0) ||
+            this.productValue.productBonus == "1"))
       ) {
-        if(this.productValue.productPhoto!==""){
+        if (this.productValue.productPhoto !== "") {
           this.uploadProduct();
-        }else{
-
+        } else {
           this.uploadImage().then(() => {
             this.uploadProduct();
           });
         }
       } else {
-        alert("Lütfen Eksik Bilgi Olmadığından Emin Olunuz");
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "warning",
+          alertText: "Lütfen Eksik Bilgi Olmadığından Emin Olunuz",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
       }
     },
     uploadProduct() {
-      console.log(this.productValue); 
-      const packages=
-      axios
-        .post("http://backend.laragon/edit_product.php", this.productValue)
-        .then(() => {
-          this.saveButtonText = "Kaydedildi";
-          setTimeout(() => {
-            this.closePopUp();
-            this.$store.dispatch("Product/productFilter",this.selectFilter)
-          }, 1000); //
-        });
+      const packages = JSON.parse(this.productValue.packages);
+      var value = { ...this.productValue };
+      value.packages = packages;
+      axios.post("http://backend.laragon/edit_product.php", value).then(() => {
+        this.saveButtonText = "Kaydedildi";
+        setTimeout(() => {
+          this.closePopUp();
+          this.$store.dispatch("Product/productFilter", this.selectFilter);
+          this.$store.dispatch("Alert/openAlert");
+          const alertPackage = {
+            alertType: "success",
+            alertText: "Kaydedildi",
+          };
+          this.$store.dispatch("Alert/alertContent", alertPackage);
+        }, 1000); //
+      });
     },
     uploadFile() {
       const fileInput = this.$refs.fileInput;
@@ -403,10 +424,8 @@ export default {
     ...mapGetters({
       categories: "NavMenu/_navMenuItems",
       productValue: "Product/_editProductValue",
-      selectFilter:"Product/_selectFilter",
+      selectFilter: "Product/_selectFilter",
     }),
   },
-
-
 };
 </script>

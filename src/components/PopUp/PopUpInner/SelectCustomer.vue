@@ -42,7 +42,9 @@
             @keyup="searchKey"
           />
         </th>
-        <th></th>
+        <th>
+          <div class="openDelete pt" @click="openDelete">SİL</div>
+        </th>
       </tr>
       <tr
         class="customerItem pt"
@@ -53,12 +55,29 @@
         <td>{{ customer.cus_name }}</td>
         <td>{{ customer.cus_surname }}</td>
         <td>{{ customer.cus_phone }}</td>
-        <td><img src="@/assets/image/runnincAcc/tick.svg" alt="" /></td>
+        <td>
+          <img
+            src="@/assets/image/runnincAcc/trash.svg"
+            alt=""
+            style="margin-right: 9px"
+            v-if="deleteStatus"
+            @click="deleteCustomer(customer, $event)"
+          />
+          <img src="@/assets/image/runnincAcc/tick.svg" alt="" />
+        </td>
       </tr>
     </table>
   </div>
 </template>
 <style scoped>
+.openDelete {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+}
 .customerItem {
   background-color: white;
   border-radius: 10px;
@@ -133,6 +152,7 @@ th {
 }
 </style>
 <script>
+import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -141,9 +161,22 @@ export default {
       searchSurName: "",
       searchPhone: "",
       filteredCustomer: [],
+      deleteStatus: false,
     };
   },
   methods: {
+    async deleteCustomer(customer, event) {
+      event.stopPropagation();
+      console.log(customer);
+      await axios.post(
+        "http://backend.laragon/delete_customer.php",
+        customer.cus_id
+      );
+      this.$store.dispatch("Customer/getCustomerList");
+    },
+    openDelete() {
+      this.deleteStatus = !this.deleteStatus;
+    },
     searchKey() {
       this.filteredCustomer = this.customerList.filter(
         (item) =>

@@ -19,7 +19,6 @@ export default {
   actions: {
     changeSelectCustomer({ commit }, customer) {
       commit("setSelectedCustomer", customer);
-      console.log(customer);
     },
     refreshSelectedCustomer({ commit }) {
       commit("refreshSelectedCustomer");

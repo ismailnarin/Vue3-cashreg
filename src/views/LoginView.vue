@@ -206,15 +206,30 @@ export default {
           .post("http://backend.laragon/add_personel.php", this.personel)
           .then((response) => {
             if (response.data.status == 200) {
-              alert("Kayıt Talebiniz Başarıyla Oluşturuldu");
+              this.$store.dispatch("Alert/openAlert");
+              const alertPackage = {
+                alertType: "success",
+                alertText: "Kayıt Talebiniz Başarıyla Oluşturuldu",
+              };
+              this.$store.dispatch("Alert/alertContent", alertPackage);
               this.clearPersonel();
               this.loginShow = !this.loginShow;
             } else {
-              alert("Kayıt İşlemi Sırasında Bir Hata Oluştu");
+              this.$store.dispatch("Alert/openAlert");
+              const alertPackage = {
+                alertType: "warning",
+                alertText: "Kayıt İşlemi Sırasında Bir Hata Oluştu",
+              };
+              this.$store.dispatch("Alert/alertContent", alertPackage);
             }
           });
       } else {
-        alert("Lütfen Bilgileri Kontrol Ediniz");
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "warning",
+          alertText: "Lütfen Bilgileri Kontrol Ediniz",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
       }
     },
   },

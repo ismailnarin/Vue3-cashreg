@@ -152,7 +152,12 @@ export default {
     async checkRunning() {
       if (this.runningAcc == 0) {
         await this.$store.dispatch("Order/saveOrder");
-        alert("Sipariş Başarıyla Sonlandırıldı");
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "success",
+          alertText: "Sipariş Başarıyla Sonlandırıldı",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
         this.$store.dispatch("Calculator/refreshCalc");
         this.$store.dispatch("RunningAcc/refreshRunning");
         this.$store.dispatch("SelectedCustomer/refreshSelectedCustomer");
@@ -210,7 +215,12 @@ export default {
           await this.$store.dispatch("Calculator/refreshCalc");
           this.checkRunning();
         } else if (this.runningAcc < price) {
-          alert("Açık Hesap Tutarından Fazla İndirim Giremezsiniz");
+          this.$store.dispatch("Alert/openAlert");
+          const alertPackage = {
+            alertType: "warning",
+            alertText: "Açık Hesap Tutarından Fazla İndirim Giremezsiniz",
+          };
+          this.$store.dispatch("Alert/alertContent", alertPackage);
         }
       }
     },
@@ -222,7 +232,12 @@ export default {
         await this.$store.dispatch("Calculator/refreshCalc");
         this.checkRunning();
       } else {
-        alert("Açık Hesap Değeri 0TL olmamalıdır");
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "warning",
+          alertText: "Açık Hesap Değeri 0TL olmamalıdır",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
       }
     },
     async checkOrder(orderType) {
@@ -238,10 +253,20 @@ export default {
         ) {
           this.orderTypeCheck(orderType, this.secondNumber);
         } else {
-          alert("Lütfen Ücreti Girdiğinizden Emin Olunuz");
+          this.$store.dispatch("Alert/openAlert");
+          const alertPackage = {
+            alertType: "warning",
+            alertText: "Lütfen Ücreti Girdiğinizden Emin Olunuz",
+          };
+          this.$store.dispatch("Alert/alertContent", alertPackage);
         }
       } else {
-        alert("Lütfen Müşteri Seçiniz");
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "warning",
+          alertText: "Lütfen Müşteri Seçiniz",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
       }
     },
     async addNumber(number) {

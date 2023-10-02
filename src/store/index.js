@@ -13,6 +13,7 @@ import Calculator from "./Calculator/CalculatorStore";
 import Order from "./Order/OrderStore";
 import OrderReport from "./OrderReport/OrderReport";
 import WaitingList from "./WaitingList/WaitingListStore";
+import Alert from "./Alert/AlertStore";
 import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
@@ -35,6 +36,7 @@ export default createStore({
     Order,
     OrderReport,
     WaitingList,
+    Alert,
   },
   plugins: [createPersistedState()],
 });

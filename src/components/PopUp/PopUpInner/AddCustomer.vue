@@ -16,7 +16,9 @@
     </div>
     <div>
       <div class="text">Telefon</div>
-      <div><input type="text" name="" id="" v-model="customer.cusPhone" /></div>
+      <div>
+        <input type="number  " name="" id="" v-model="customer.cusPhone" />
+      </div>
     </div>
     <div v-if="false">
       <div class="text">Seçili Müşteri Yap</div>
@@ -75,6 +77,7 @@ input:focus {
 }
 </style>
 <script scoped>
+import { mapGetters } from "vuex";
 import axios from "axios";
 export default {
   data() {
@@ -88,20 +91,72 @@ export default {
     };
   },
   methods: {
-    addCustomer() {
-      if (
-        this.customer.cusName !== "" &&
-        this.customer.cusSurName !== "" &&
-        this.customer.cusPhone !== ""
-      ) {
-        axios.post("http://backend.laragon/add_customer.php", this.customer);
+    async addCustomer() {
+      if (this.checkCustomerList()) {
+        this.$store.dispatch("Alert/openAlert");
+        const alertPackage = {
+          alertType: "warning",
+          alertText: "Bu numaraya kayıtlı bir müşteri zaten bulunuyor.",
+        };
+        this.$store.dispatch("Alert/alertContent", alertPackage);
       } else {
-        alert("Lütfen Bilgileri Eksiksiz Giriniz.");
+        if (
+          this.customer.cusName !== "" &&
+          this.customer.cusSurName !== "" &&
+          this.customer.cusPhone !== ""
+        ) {
+          axios
+            .post("http://backend.laragon/add_customer.php", this.customer)
+            .then(async (response) => {
+              console.log(response);
+              const selectedCustomer = {
+                cus_id: response.id,
+                cus_name:
+                  this.customer.cusName.charAt(0).toUpperCase() +
+                  this.customer.cusName.slice(1),
+                cus_phone: this.customer.cusPhone,
+                cus_surname:
+                  this.customer.cusSurName.charAt(0).toUpperCase() +
+                  this.customer.cusSurName.slice(1),
+              };
+              this.$store.dispatch(
+                "SelectedCustomer/changeSelectCustomer",
+                selectedCustomer
+              );
+              this.$store.dispatch("Alert/openAlert");
+              const alertPackage = {
+                alertType: "success",
+                alertText: "Müşteri Eklendi",
+              };
+              this.$store.dispatch("Alert/alertContent", alertPackage);
+              await this.$store.dispatch("Customer/getCustomerList");
+              setTimeout(() => {
+                this.closePopUp();
+              }, 200); //
+            });
+        } else {
+          this.$store.dispatch("Alert/openAlert");
+          const alertPackage = {
+            alertType: "warning",
+            alertText: "Lütfen Bilgileri Eksiksiz Giriniz.",
+          };
+          this.$store.dispatch("Alert/alertContent", alertPackage);
+        }
       }
+    },
+    checkCustomerList() {
+      return this.customerList.find(
+        (element) => element.cus_phone === this.customer.cusPhone
+      );
     },
     closePopUp() {
       this.$store.dispatch("PopUp/openPopUp");
     },
+  },
+  computed: {
+    ...mapGetters({
+      customerList: "Customer/_customerList",
+    }),
   },
 };
 </script>

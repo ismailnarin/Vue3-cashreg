@@ -207,7 +207,12 @@ export default {
         .post("http://backend.laragon/edit_personel.php", this.personel)
         .then((response) => {
           if (response.data.status == 200) {
-            alert("Başarıyla Güncellendi");
+            this.$store.dispatch("Alert/openAlert");
+            const alertPackage = {
+              alertType: "success",
+              alertText: "Başarıyla Güncellendi",
+            };
+            this.$store.dispatch("Alert/alertContent", alertPackage);
             this.personel.personelName = "";
             this.personel.personelSurName = "";
             this.personel.personelPhone = "";
