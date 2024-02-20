@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-if="!loginShow">
     <div>
-      <div class="title">Beauty Login</div>
+      <div class="title"></div>
       <div class="loginContainer">
         <div class="loginTitle">Giriş Yap</div>
         <div>
